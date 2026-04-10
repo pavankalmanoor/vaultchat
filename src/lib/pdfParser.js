@@ -9,7 +9,10 @@
 // Vite's pipeline entirely — the file is delivered raw to the browser Worker.
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/legacy/build/pdf.js';
 
-GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+// Use import.meta.env.BASE_URL so the path is correct both on localhost (/)
+// and on GitHub Pages (/vaultchat/). A hardcoded '/pdf.worker.min.js' breaks
+// on any deployment that isn't at the root of the domain.
+GlobalWorkerOptions.workerSrc = import.meta.env.BASE_URL + 'pdf.worker.min.js';
 
 /**
  * @param {File} file  A PDF File object from an <input> or drag-and-drop.
